@@ -6,7 +6,6 @@ REDIRECT_URI=http://localhost:8080/callback
 SCOPE="openid profile email User.Read"
 STATE="openssl rand -hex 12"
 
-
 # Step 1: Open the authorization URL in the browser
 AUTH_URL="https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&response_mode=query&scope=${SCOPE}&state=${STATE}"
 
@@ -16,7 +15,7 @@ xdg-open "$AUTH_URL" 2>/dev/null || open "$AUTH_URL" || echo "Please open this U
 # Step 2: Start the Node.js server to capture the authorization code
 echo "Starting the Node.js server to capture the authorization code..."
 
-node ./scripts/oauth2/get_token_server.js &  # Start the Node.js server in the background
+node ./get_token_server.js &  # Start the Node.js server in the background
 NODE_PID=$!  # Capture the process ID to stop it later
 
 # Wait until the authorization code is captured (server will write it to /tmp/auth_code.txt)
